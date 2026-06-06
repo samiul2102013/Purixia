@@ -124,7 +124,7 @@ export default function CheckoutPage() {
 
     try {
       const order = await placeOrderMutation.mutateAsync(payload);
-      setOrderSuccess({ id: order.id });
+      setOrderSuccess({ id: String(order.id) });
       useCartStore.getState().setCart({ items: [], grand_total: '0.00', count: 0 });
     } catch (err: any) {
       toast.error(err.response?.data?.error || 'Failed to place order');
