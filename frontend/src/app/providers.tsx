@@ -1,0 +1,46 @@
+'use client';
+
+import * as React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
+import { useCartStore } from '../stores/cartStore';
+import { useAuthStore } from '../stores/authStore';
+import { CartDrawer } from '../components/cart/CartDrawer';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  // Create client on client side to avoid sharing cache across users
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000, // 1 minute
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
+
+  const fetchCart = useCartStore((s) => s.fetchCart);
+  const initializeAuth = useAuthStore((s) => s.initAuth);
+
+  // Initialize cart and auth on mount
+  React.useEffect(() => {
+    initializeAuth();
+    fetchCart().catch(() => {});
+  }, [fetchCart, initializeAuth]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <CartDrawer />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          className: 'text-sm font-semibold rounded-2xl bg-white border border-gray-100 shadow-xl shadow-gray-200/50',
+          duration: 3000,
+        }}
+      />
+    </QueryClientProvider>
+  );
+}
