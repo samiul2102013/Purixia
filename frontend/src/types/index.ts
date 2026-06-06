@@ -73,8 +73,8 @@ export interface ShippingInfo {
   address: string;
 }
 
-export type DeliveryType = 'standard' | 'express';
-export type PaymentMethod = 'cod';
+export type DeliveryType = 'inside' | 'outside';
+export type PaymentMethod = 'cod' | 'card' | 'bkash' | 'nagad';
 export type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
 
 export interface OrderItem {
