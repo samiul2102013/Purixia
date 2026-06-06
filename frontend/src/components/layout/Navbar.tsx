@@ -202,7 +202,7 @@ export function Navbar() {
               Home
             </Link>
             <Link
-              href="/offers"
+              href="/"
               className="text-[15px] font-medium font-poppins text-[#2A2A2A] hover:text-[#F4B227]"
             >
               Offers

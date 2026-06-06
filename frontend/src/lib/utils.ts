@@ -26,22 +26,26 @@ export function formatDate(dateString: string): string {
 export function getImageUrl(path: string | null): string {
   if (!path) return '/images/placeholder.png';
   
+  // Strip any accidental backticks or quotes that might come from the API/DB
+  const cleanPath = path.trim().replace(/^[`'"]|[`'"]$/g, '');
+
   // If it's already a full URL, return it
-  if (path.startsWith('http://') || path.startsWith('https://')) {
-    return path;
+  if (cleanPath.startsWith('http://') || cleanPath.startsWith('https://')) {
+    return cleanPath;
   }
 
-  // Get base URL from env or fallback to localhost
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? 'http://localhost:8000' : 'http://127.0.0.1:8000');
+  // Get base URL from env
+  // We remove the '/api' suffix if it exists because media is served from the root
+  let baseUrl = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? 'http://localhost:8000' : 'http://127.0.0.1:8000');
   
-  // Ensure we don't double slash or have issues with the path
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  // Remove trailing slash and '/api' suffix for image base URL
+  let cleanBase = baseUrl.trim().replace(/\/+$/, '');
+  if (cleanBase.endsWith('/api')) {
+    cleanBase = cleanBase.slice(0, -4);
+  }
   
-  // If the path already contains the base URL (sometimes DRF does this depending on config)
-  if (path.includes('://')) return path;
-
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${cleanBase}${cleanPath}`;
+  const finalPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+  return `${cleanBase}${finalPath}`;
 }
 
 export function getErrorMessage(error: unknown): string {

@@ -44,9 +44,9 @@ export function Footer() {
         <div className="col-span-1">
           <h3 className="text-[16px] font-bold text-black mb-4 font-poppins uppercase tracking-wider">Support</h3>
           <ul className="space-y-3">
-            <li><Link href="/privacy" className="text-[#666666] hover:text-[#F4B227] text-[13px] font-poppins">Privacy Policy</Link></li>
-            <li><Link href="/terms" className="text-[#666666] hover:text-[#F4B227] text-[13px] font-poppins">Terms & Condition</Link></li>
-            <li><Link href="/help" className="text-[#666666] hover:text-[#F4B227] text-[13px] font-poppins">Help Center</Link></li>
+            <li><span className="text-[#666666] text-[13px] font-poppins cursor-not-allowed opacity-50">Privacy Policy</span></li>
+            <li><span className="text-[#666666] text-[13px] font-poppins cursor-not-allowed opacity-50">Terms & Condition</span></li>
+            <li><span className="text-[#666666] text-[13px] font-poppins cursor-not-allowed opacity-50">Help Center</span></li>
           </ul>
         </div>
       </div>
