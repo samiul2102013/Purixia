@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth, useRegister } from '../../hooks/useAuth';
+import { useCartStore } from '../../stores/cartStore';
 import toast from 'react-hot-toast';
 
 const registerSchema = z.object({
@@ -30,8 +31,10 @@ function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
+  const addToCartId = searchParams.get('add_to_cart');
   const registerMutation = useRegister();
   const { isLoggedIn } = useAuth();
+  const addItem = useCartStore((s) => s.addItem);
 
   const {
     register,
@@ -43,9 +46,19 @@ function RegisterForm() {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      router.push(redirectUrl || '/');
+      const handleAuthSuccess = async () => {
+        if (addToCartId) {
+          try {
+            await addItem(addToCartId, 1);
+          } catch (e) {
+            console.error('Failed to add item after registration', e);
+          }
+        }
+        router.push(redirectUrl || '/');
+      };
+      handleAuthSuccess();
     }
-  }, [isLoggedIn, router, redirectUrl]);
+  }, [isLoggedIn, router, redirectUrl, addToCartId, addItem]);
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {

@@ -34,6 +34,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
   }, [product.image, product.images]);
 
   const handleAdd = async (goToCheckout = false) => {
+    if (!isLoggedIn) {
+      toast.error('Please create an account to place an order.');
+      router.push(`/register?redirect=/checkout&add_to_cart=${product.id}`);
+      return;
+    }
     setAdding(true);
     try {
       await addItem(product.id, quantity);

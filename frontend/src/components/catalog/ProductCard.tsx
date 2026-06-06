@@ -9,6 +9,7 @@ import { ShoppingCart, Star } from 'lucide-react';
 import { Product } from '../../types';
 import { cn, formatPrice, getImageUrl } from '../../lib/utils';
 import { useCartStore } from '../../stores/cartStore';
+import { useAuthStore } from '../../stores/authStore';
 import { Badge } from '../ui/Badge';
 import toast from 'react-hot-toast';
 
@@ -25,6 +26,15 @@ export function ProductCard({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     if (!product.in_stock) return;
+
+    // Redirect to register if not logged in
+    const isLoggedIn = useAuthStore.getState().isLoggedIn;
+    if (!isLoggedIn) {
+      toast.error('Please create an account to place an order.');
+      router.push(`/register?redirect=/checkout&add_to_cart=${product.id}`);
+      return;
+    }
+
     setAdding(true);
     try {
       await addItem(product.id, 1);
