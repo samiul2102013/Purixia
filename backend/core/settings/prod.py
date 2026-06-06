@@ -20,6 +20,9 @@ CORS_ALLOW_CREDENTIALS = True
 # ── CSRF ──────────────────────────────────────────────────────────────────────
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv(), default=[])
 
+# ── SSL Proxy ─────────────────────────────────────────────────────────────────
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # ── Security headers ──────────────────────────────────────────────────────────
 SECURE_HSTS_SECONDS            = 31_536_000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
