@@ -61,7 +61,7 @@ export default function OrderDetailPage() {
     );
   }
 
-  const shippingCost = order?.delivery_type === 'express' ? 120 : 60;
+  const shippingCost = order?.delivery_type === 'outside' ? 120 : 60;
   const subtotal = order ? parseFloat(order.total_amount) : 0;
   const grandTotal = subtotal + shippingCost;
 
