@@ -3,13 +3,11 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star } from 'lucide-react';
 import { Product } from '../../types';
 import { cn, formatPrice, getImageUrl } from '../../lib/utils';
 import { useCartStore } from '../../stores/cartStore';
-import { useAuthStore } from '../../stores/authStore';
 import { Badge } from '../ui/Badge';
 import toast from 'react-hot-toast';
 
@@ -18,7 +16,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const router = useRouter();
   const addItem = useCartStore((s) => s.addItem);
   const [adding, setAdding] = React.useState(false);
 
@@ -27,19 +24,10 @@ export function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
     if (!product.in_stock) return;
 
-    // Redirect to register if not logged in
-    const isLoggedIn = useAuthStore.getState().isLoggedIn;
-    if (!isLoggedIn) {
-      toast.error('Please create an account to place an order.');
-      router.push(`/register?redirect=/checkout&add_to_cart=${product.id}`);
-      return;
-    }
-
     setAdding(true);
     try {
       await addItem(product.id, 1);
       toast.success('Added to cart!');
-      router.push('/checkout');
     } catch {
       toast.error('Failed to add to cart');
     } finally {

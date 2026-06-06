@@ -3,15 +3,12 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Star, Minus, Plus, ShoppingCart, AlertTriangle } from 'lucide-react';
+import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Product } from '../../types';
 import { cn, formatPrice, getImageUrl } from '../../lib/utils';
 import { useCartStore } from '../../stores/cartStore';
 import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../ui/Button';
-import { Badge } from '../ui/Badge';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
 
 interface ProductDetailProps {
   product: Product;
@@ -33,19 +30,28 @@ export function ProductDetail({ product }: ProductDetailProps) {
     return gallery.length > 0 ? gallery : [product.image];
   }, [product.image, product.images]);
 
-  const handleAdd = async (goToCheckout = false) => {
+  const handleAddToCart = async () => {
+    setAdding(true);
+    try {
+      await addItem(product.id, quantity);
+      toast.success('Added to cart!');
+    } catch {
+      toast.error('Failed to add to cart');
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
     if (!isLoggedIn) {
-      toast.error('Please create an account to place an order.');
-      router.push(`/register?redirect=/checkout&add_to_cart=${product.id}`);
+      await handleAddToCart();
+      router.push(`/register?redirect=/checkout`);
       return;
     }
     setAdding(true);
     try {
       await addItem(product.id, quantity);
-      toast.success('Added to cart!');
-      if (goToCheckout) {
-        router.push('/checkout');
-      }
+      router.push('/checkout');
     } catch {
       toast.error('Failed to add to cart');
     } finally {
@@ -146,7 +152,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               
               <div className="flex flex-1 gap-3">
                 <button
-                  onClick={() => handleAdd(false)}
+                  onClick={handleAddToCart}
                   disabled={adding}
                   className="flex-1 h-[44px] bg-black text-white text-[13px] font-bold rounded-[8px] hover:bg-gray-800 transition-all shadow-sm flex items-center justify-center gap-2"
                 >
@@ -154,7 +160,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   Add to Cart
                 </button>
                 <button
-                  onClick={() => handleAdd(true)}
+                  onClick={handleBuyNow}
                   disabled={adding}
                   className="flex-1 h-[44px] bg-[#F4B227] text-white text-[13px] font-bold rounded-[8px] hover:bg-[#D89500] transition-all shadow-sm uppercase tracking-wider"
                 >

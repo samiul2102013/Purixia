@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { orderService } from '../services/orders';
 import { useAuthStore } from '../stores/authStore';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 export function useOrders() {
@@ -26,14 +25,11 @@ export function useOrder(id: number | string) {
 
 export function usePlaceOrder() {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: orderService.placeOrder,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      toast.success('Order placed successfully!');
-      router.push(`/orders/${data.id}`);
     },
     onError: (error: any) => {
       const message = error.response?.data?.error || 'Failed to place order. Try again.';
