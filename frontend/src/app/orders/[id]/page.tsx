@@ -176,7 +176,7 @@ export default function OrderDetailPage() {
                         {order.delivery_type} Delivery
                       </p>
                       <p className="text-[10px] text-gray-400">
-                        {order.delivery_type === 'express'
+                        {order.delivery_type === 'inside'
                           ? '1 - 2 business days'
                           : '3 - 5 business days'}
                       </p>
