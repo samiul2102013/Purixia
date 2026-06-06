@@ -44,8 +44,12 @@ export const useCartStore = create<CartState>((set, get) => ({
     try {
       const cart = await cartService.getCart();
       get().setCart(cart);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to fetch cart', error);
+      // If unauthorized, we might need to handle it or clear state
+      if (error.response?.status === 401) {
+        set({ items: [], count: 0, grandTotal: '0.00' });
+      }
     } finally {
       set({ loading: false });
     }

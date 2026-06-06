@@ -107,7 +107,7 @@ export default function CheckoutPage() {
   if (isChecking || !isLoggedIn) return null;
 
   const shippingCost = deliveryType === 'outside' ? 120 : 60;
-  const subtotal = parseFloat(cartGrandTotal);
+  const subtotal = parseFloat(cartGrandTotal) || items.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
   const grandTotal = subtotal + shippingCost;
 
   const onSubmit = async (values: CheckoutFormValues) => {
