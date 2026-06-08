@@ -66,9 +66,10 @@ export default function CheckoutPage() {
   React.useEffect(() => {
     if (!isChecking && !isLoggedIn) {
       toast.error('Please register to place an order.', { id: 'checkout-auth-error' });
-      router.push('/register?redirect=/checkout');
+      const firstId = items.length > 0 ? items[0].product.id : '';
+      router.push(`/register?redirect=/checkout${firstId ? `&add_to_cart=${firstId}` : ''}`);
     }
-  }, [isLoggedIn, isChecking, router]);
+  }, [isLoggedIn, isChecking, router, items]);
 
   if (orderSuccess) {
     return (
