@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_API = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
+const BASE_API = 'https://purixia.kodevio.com';
 
 const api = axios.create({
   baseURL: BASE_API,
