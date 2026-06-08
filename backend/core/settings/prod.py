@@ -17,11 +17,10 @@ DATABASES = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# If a specific list is provided in .env, use it instead of wildcard
-_cors = config('CORS_ALLOWED_ORIGINS', default='').strip()
-if _cors:
-    CORS_ALLOW_ALL_ORIGINS = False
-    CORS_ALLOWED_ORIGINS = [o.strip() for o in _cors.split(',') if o.strip()]
+# Merge any env-provided origins into allowed list (still send ACAO for all)
+_existing = [o.strip() for o in config('CORS_ALLOWED_ORIGINS', default='').split(',') if o.strip()]
+if _existing:
+    CORS_ALLOWED_ORIGINS = _existing
 
 # ── CSRF ──────────────────────────────────────────────────────────────────────
 CSRF_TRUSTED_ORIGINS = [
