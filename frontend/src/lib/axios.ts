@@ -1,9 +1,9 @@
 import axios from 'axios';
 
+const BASE_API = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
+
 const api = axios.create({
-  baseURL: typeof window !== 'undefined' 
-    ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000') 
-    : (process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'),
+  baseURL: BASE_API,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -85,9 +85,8 @@ api.interceptors.response.use(
       }
 
       try {
-        const refreshBaseUrl = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? 'http://localhost:8000' : 'http://127.0.0.1:8000');
         const response = await axios.post(
-          `${refreshBaseUrl}/api/auth/token/refresh/`,
+          `${BASE_API}/api/auth/token/refresh/`,
           { refresh: refreshToken }
         );
 
