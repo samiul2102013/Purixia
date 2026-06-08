@@ -48,22 +48,17 @@ class PlaceOrderView(APIView):
     @transaction.atomic
     def post(self, request):
         cart = Cart(request)
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.info(f"PLACE_ORDER: user={request.user}, session_key={request.session.session_key}, cart_len={len(cart)}")
 
         serializer = PlaceOrderSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
 
-        # Use items from request body (frontend store) if session cart is empty
         body_items = data.get('items')
         if body_items:
             items_source = body_items
         elif cart and len(cart) > 0:
             items_source = cart
         else:
-            logger.warning(f"PLACE_ORDER_FAIL: cart empty. session_key={request.session.session_key}")
             return Response({'error': 'Your cart is empty. Please add items before checkout.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
