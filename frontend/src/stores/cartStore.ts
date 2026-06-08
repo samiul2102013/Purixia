@@ -34,6 +34,8 @@ export const useCartStore = create<CartState>((set, get) => ({
     count: cart.count || 0,
   }),
 
+
+
   openDrawer: () => set({ isDrawerOpen: true }),
   
   closeDrawer: () => set({ isDrawerOpen: false }),
@@ -44,10 +46,13 @@ export const useCartStore = create<CartState>((set, get) => ({
     set({ loading: true });
     try {
       const cart = await cartService.getCart();
-      get().setCart(cart);
+      // Only update from backend if it has items (backend session may be empty
+      // when cross-origin cookies are blocked)
+      if (cart.items && cart.items.length > 0) {
+        get().setCart(cart);
+      }
     } catch (error: any) {
       console.error('Failed to fetch cart', error);
-      // If unauthorized, we might need to handle it or clear state
       if (error.response?.status === 401) {
         set({ items: [], count: 0, grandTotal: '0.00' });
       }
