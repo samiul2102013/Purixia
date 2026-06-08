@@ -47,11 +47,16 @@ function RegisterForm() {
   React.useEffect(() => {
     if (isLoggedIn) {
       const handleAuthSuccess = async () => {
-        if (addToCartId) {
-          try {
-            await addItemSilent(addToCartId, 1);
-          } catch (e) {
-            console.error('Failed to add item after registration', e);
+        const { items, fetchCart } = useCartStore.getState();
+        if (items.length === 0) {
+          await fetchCart();
+          const { items: refreshed } = useCartStore.getState();
+          if (refreshed.length === 0 && addToCartId) {
+            try {
+              await addItemSilent(addToCartId, 1);
+            } catch (e) {
+              console.error('Failed to add item after registration', e);
+            }
           }
         }
         router.push(redirectUrl || '/');
