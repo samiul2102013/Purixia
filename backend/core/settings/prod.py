@@ -14,11 +14,20 @@ DATABASES = {
 }
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
-CORS_ALLOWED_ORIGINS = [o.strip() for o in config('CORS_ALLOWED_ORIGINS', default='').split(',') if o.strip()]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# If a specific list is provided in .env, use it instead of wildcard
+_cors = config('CORS_ALLOWED_ORIGINS', default='').strip()
+if _cors:
+    CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOWED_ORIGINS = [o.strip() for o in _cors.split(',') if o.strip()]
+
 # ── CSRF ──────────────────────────────────────────────────────────────────────
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in config('CSRF_TRUSTED_ORIGINS', default='').split(',') if o.strip()]
+CSRF_TRUSTED_ORIGINS = [
+    'https://purixia.vercel.app',
+    'https://purixia.kodevio.com',
+]
 
 # ── SSL Proxy ─────────────────────────────────────────────────────────────────
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -27,7 +36,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS            = 31_536_000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD            = True
-SECURE_SSL_REDIRECT            = config('SECURE_SSL_REDIRECT', cast=bool, default=True)
+SECURE_SSL_REDIRECT            = False  # nginx handles SSL termination
 SESSION_COOKIE_SECURE          = True
 SESSION_COOKIE_SAMESITE        = 'None'
 CSRF_COOKIE_SECURE             = True
