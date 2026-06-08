@@ -3,7 +3,7 @@ from decouple import config
 
 DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*')
+ALLOWED_HOSTS = ['*']
 
 # ── Database: SQLite (Keeping it built-in as requested) ────────────────────────
 DATABASES = {
