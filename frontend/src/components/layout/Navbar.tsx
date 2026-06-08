@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import {
@@ -62,9 +63,7 @@ export function Navbar() {
         <div className="max-w-[1440px] mx-auto w-full px-[40px] md:px-[80px] flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-[22px] font-extrabold bg-[#F4B227] bg-clip-text text-transparent tracking-tight font-poppins">
-              Purixia BD
-            </span>
+            <Image src="/logo.png" alt="Purixia BD" width={110} height={32} className="object-contain" priority />
           </Link>
 
           {/* Search Bar */}

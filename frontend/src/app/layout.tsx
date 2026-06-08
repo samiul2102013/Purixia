@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   description:
     'Purixia is the leading premium gadget, watch, headphone, and accessory store in Bangladesh. Discover the latest tech items with fast shipping.',
   keywords: 'ecommerce, gadgets, smart watches, headphones, tech, bangladesh, purixia',
+  icons: { icon: '/favicon.ico' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
