@@ -68,7 +68,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-[40px] md:px-[80px] py-[20px] font-poppins">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px] lg:px-[80px] py-[20px] font-poppins">
       {/* Product Card */}
       <div className="bg-white rounded-[20px] shadow-[0px_4px_30px_rgba(0,0,0,0.03)] p-[24px] mb-[24px] border border-gray-50">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-[30px]">
@@ -139,8 +139,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </div>
 
             {/* Quantity & Actions */}
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex items-center border border-gray-200 rounded-[8px] h-[44px] bg-gray-50">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-8">
+              <div className="flex items-center border border-gray-200 rounded-[8px] h-[44px] bg-gray-50 w-fit">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-full flex items-center justify-center text-gray-400 hover:text-black transition-colors"

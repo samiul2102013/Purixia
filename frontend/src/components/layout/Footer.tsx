@@ -6,8 +6,8 @@ import { Share2, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#FFFBEB] pt-[60px] pb-[30px] px-[40px] md:px-[80px] border-t border-gray-100">
-      <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 md:grid-cols-4 gap-[40px]">
+    <footer className="w-full bg-[#FFFBEB] pt-[60px] pb-[30px] px-4 sm:px-6 md:px-[40px] lg:px-[80px] border-t border-gray-100">
+      <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-[40px]">
         {/* Company Info */}
         <div className="col-span-1 space-y-4">
           <Link href="/" className="flex items-center gap-2">

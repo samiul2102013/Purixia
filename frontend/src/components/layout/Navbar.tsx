@@ -29,6 +29,7 @@ export function Navbar() {
   const { data: categories } = useCategories();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [searchOpen, setSearchOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = React.useState(false);
@@ -60,13 +61,13 @@ export function Navbar() {
     <div className="w-full">
       {/* Top Navbar */}
       <header className="w-full h-[64px] bg-[#000000] flex items-center shadow-[0px_0px_4px_rgba(0,0,0,0.25)] sticky top-0 z-[100]">
-        <div className="max-w-[1440px] mx-auto w-full px-[40px] md:px-[80px] flex items-center justify-between relative">
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-[40px] lg:px-[80px] flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <Image src="/logo.png" alt="Purixia BD" width={80} height={24} className="object-contain" priority />
           </Link>
 
-          {/* Search Bar */}
+          {/* Search Bar - Desktop */}
           <div className="relative w-[440px] h-[36px] hidden md:flex items-center">
             <input
               type="text"
@@ -77,6 +78,14 @@ export function Navbar() {
               <Search className="w-4 h-4 text-white" />
             </button>
           </div>
+
+          {/* Search Icon - Mobile */}
+          <button
+            onClick={() => setSearchOpen(!searchOpen)}
+            className="md:hidden w-[36px] h-[36px] border border-[#F4B227] rounded-[18px] flex items-center justify-center text-[#F4B227] hover:bg-[#F4B227]/10 transition-colors"
+          >
+            <Search className="w-5 h-5" />
+          </button>
 
           {/* Actions */}
           <div className="flex items-center gap-[12px]">
@@ -155,15 +164,31 @@ export function Navbar() {
         </div>
       </header>
 
+      {/* Mobile Search Panel */}
+      {searchOpen && (
+        <div className="md:hidden bg-[#000000] px-4 pb-3 pt-0">
+          <div className="relative w-full h-[36px] flex items-center">
+            <input
+              type="text"
+              placeholder="Search product..."
+              className="w-full h-full bg-[#1A1A1A] border border-[#F4B227]/30 rounded-[30px] px-[16px] text-white text-[13px] font-poppins focus:outline-none focus:border-[#F4B227] transition-all"
+            />
+            <button className="absolute right-0 top-0 w-[50px] h-[36px] bg-[#F4B227] border border-[#F4B227] rounded-r-[30px] flex items-center justify-center hover:bg-[#D89500] transition-colors">
+              <Search className="w-4 h-4 text-white" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Bottom Navbar */}
-      <nav className="w-full h-[40px] bg-[#F5F5F5] flex items-center relative border-b border-gray-100">
-        <div className="max-w-[1440px] mx-auto w-full px-[40px] md:px-[80px] flex items-center">
+      <nav className="w-full h-[40px] bg-[#F5F5F5] flex items-center relative border-b border-gray-100 overflow-x-auto overflow-y-hidden scrollbar-hide">
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-[40px] lg:px-[80px] flex items-center shrink-0">
           {/* Categories Button */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
               onMouseEnter={() => setIsCategoriesOpen(true)}
               onMouseLeave={() => setIsCategoriesOpen(false)}
-              className="w-[180px] h-[40px] bg-[#F4B227] rounded-t-[5px] flex items-center px-[12px] gap-[8px] text-white font-bold text-[14px] font-poppins"
+              className="w-[140px] md:w-[180px] h-[40px] bg-[#F4B227] rounded-t-[5px] flex items-center px-[12px] gap-[8px] text-white font-bold text-[12px] md:text-[14px] font-poppins"
             >
               Categories
               <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", isCategoriesOpen && "rotate-180")} />
@@ -190,11 +215,11 @@ export function Navbar() {
           </div>
 
           {/* Main Links */}
-          <div className="ml-[24px] flex items-center gap-[24px]">
+          <div className="ml-3 md:ml-[24px] flex items-center gap-3 md:gap-[24px]">
             <Link
               href="/"
               className={cn(
-                "text-[15px] font-medium font-poppins",
+                "text-[13px] md:text-[15px] font-medium font-poppins whitespace-nowrap",
                 pathname === "/" ? "text-[#F4B227]" : "text-[#2A2A2A] hover:text-[#F4B227]"
               )}
             >
@@ -202,7 +227,7 @@ export function Navbar() {
             </Link>
             <Link
               href="/"
-              className="text-[15px] font-medium font-poppins text-[#2A2A2A] hover:text-[#F4B227]"
+              className="text-[13px] md:text-[15px] font-medium font-poppins text-[#2A2A2A] hover:text-[#F4B227] whitespace-nowrap"
             >
               Offers
             </Link>

@@ -73,11 +73,11 @@ export default function CheckoutPage() {
 
   if (orderSuccess) {
     return (
-      <div className="max-w-[1440px] mx-auto px-[80px] md:px-[120px] py-[100px] flex items-center justify-center font-poppins">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-[80px] lg:px-[120px] py-12 sm:py-[100px] flex items-center justify-center font-poppins">
         <motion.div 
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white rounded-[20px] shadow-[0px_10px_40px_rgba(0,0,0,0.05)] p-[60px] text-center max-w-[600px] w-full"
+          className="bg-white rounded-[20px] shadow-[0px_10px_40px_rgba(0,0,0,0.05)] p-6 sm:p-10 lg:p-[60px] text-center max-w-[600px] w-full"
         >
           <div className="w-20 h-20 bg-[#10B981] rounded-full flex items-center justify-center mx-auto mb-8">
             <CheckCircle className="w-10 h-10 text-white" />
@@ -138,7 +138,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-[80px] md:px-[120px] py-[40px] font-poppins">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-[80px] lg:px-[120px] py-[40px] font-poppins">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-[28px] font-bold text-black">Order Details</h1>
         <button onClick={() => router.back()} className="text-gray-400 hover:text-black">

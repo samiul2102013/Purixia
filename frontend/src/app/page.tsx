@@ -29,7 +29,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Hero Banner Section */}
-      <section className="w-full px-[40px] md:px-[80px] py-[10px]">
+      <section className="w-full px-4 sm:px-6 md:px-[40px] lg:px-[80px] py-[10px]">
         <div className="max-w-[1440px] mx-auto relative h-[360px] bg-[#D89500] rounded-[20px] overflow-hidden shadow-sm">
           {banners && banners.length > 0 ? (
             <div className="relative w-full h-full">
@@ -48,7 +48,7 @@ export default function HomePage() {
                     className="object-cover"
                     priority={index === 0}
                   />
-                  <div className="absolute inset-0 bg-black/20 flex flex-col justify-center px-[40px] md:px-[80px]">
+                  <div className="absolute inset-0 bg-black/20 flex flex-col justify-center px-4 sm:px-6 md:px-[40px] lg:px-[80px]">
                     {banner.subtitle && (
                       <h2 className="text-[#F4B227] text-[14px] md:text-[16px] font-bold italic mb-1 uppercase tracking-widest drop-shadow-sm">
                         {banner.subtitle}
@@ -78,7 +78,7 @@ export default function HomePage() {
               )}
             </div>
           ) : (
-            <div className="w-full h-full flex flex-col justify-center px-[40px] md:px-[80px]">
+            <div className="w-full h-full flex flex-col justify-center px-4 sm:px-6 md:px-[40px] lg:px-[80px]">
               <h2 className="text-[#F4B227] text-[14px] md:text-[16px] font-bold italic mb-1 uppercase tracking-widest">New Arrivals.</h2>
               <h1 className="text-white text-[32px] md:text-[44px] font-extrabold leading-[1.1] uppercase">
                 GADGET <br /> SALE
@@ -89,7 +89,7 @@ export default function HomePage() {
       </section>
 
       {/* Popular Categories Section */}
-      <section className="w-full px-[40px] md:px-[80px] py-[15px] bg-white">
+      <section className="w-full px-4 sm:px-6 md:px-[40px] lg:px-[80px] py-[15px] bg-white">
         <div className="max-w-[1440px] mx-auto flex flex-col items-center">
           <h2 className="text-[20px] font-bold text-black mb-1 uppercase tracking-wider">Popular Categories</h2>
           <p className="text-[12px] text-[#666666] mb-[20px]">Explore our wide range of categories</p>
@@ -125,7 +125,7 @@ export default function HomePage() {
       </section>
 
       {/* Popular Products Section */}
-      <section className="w-full px-[40px] md:px-[80px] py-[20px] bg-white">
+      <section className="w-full px-4 sm:px-6 md:px-[40px] lg:px-[80px] py-[20px] bg-white">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex justify-between items-end mb-[20px] border-b border-gray-100 pb-2">
             <div>
