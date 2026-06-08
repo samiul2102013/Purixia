@@ -30,7 +30,13 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'status', 'total_amount', 'created_at')
 
 
+class CartItemSerializer(serializers.Serializer):
+    product_id = serializers.IntegerField()
+    quantity   = serializers.IntegerField(min_value=1)
+    price      = serializers.DecimalField(max_digits=12, decimal_places=2)
+
 class PlaceOrderSerializer(serializers.Serializer):
     shipping_info  = ShippingInfoSerializer()
     delivery_type  = serializers.ChoiceField(choices=['inside', 'outside'], default='inside')
     payment_method = serializers.ChoiceField(choices=['cod', 'card', 'bkash', 'nagad'], default='cod')
+    items          = CartItemSerializer(many=True, required=False)

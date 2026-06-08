@@ -99,10 +99,17 @@ export interface Order {
   created_at: string;
 }
 
+export interface CartItemInput {
+  product_id: number;
+  quantity: number;
+  price: string;
+}
+
 export interface PlaceOrderPayload {
   shipping_info: ShippingInfo;
   delivery_type: DeliveryType;
   payment_method: PaymentMethod;
+  items?: CartItemInput[];
 }
 
 export interface Banner {

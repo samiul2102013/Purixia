@@ -121,6 +121,11 @@ export default function CheckoutPage() {
       },
       delivery_type: values.delivery_type,
       payment_method: values.payment_method,
+      items: items.map(item => ({
+        product_id: item.product.id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
     };
 
     try {
