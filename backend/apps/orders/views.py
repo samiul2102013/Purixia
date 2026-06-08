@@ -66,6 +66,8 @@ class PlaceOrderView(APIView):
                 )
                 
                 product.quantity -= qty
+                if product.quantity <= 0:
+                    product.in_stock = False
                 product.save()
                 total += price * qty
 
