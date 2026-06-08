@@ -31,6 +31,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       try {
         const user = await authService.me();
         set({ user, isLoggedIn: true });
+        await useCartStore.getState().fetchCart();
       } catch (error) {
         // Token might be expired or invalid, clear it
         clearTokens();
@@ -45,10 +46,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const response = await authService.login({ username, password });
       saveTokens(response.tokens);
-      set({ user: response.user, isLoggedIn: true, loading: false });
+      set({ user: response.user, loading: false });
       
-      // Sync cart after login
+      // Sync cart after login (before setting isLoggedIn to prevent race condition)
       await useCartStore.getState().fetchCart();
+      set({ isLoggedIn: true });
       
       return response.user;
     } catch (error) {
@@ -62,10 +64,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const response = await authService.register(data);
       saveTokens(response.tokens);
-      set({ user: response.user, isLoggedIn: true, loading: false });
+      set({ user: response.user, loading: false });
       
-      // Sync cart after registration
+      // Sync cart after registration (before setting isLoggedIn to prevent race condition)
       await useCartStore.getState().fetchCart();
+      set({ isLoggedIn: true });
       
       return response.user;
     } catch (error) {

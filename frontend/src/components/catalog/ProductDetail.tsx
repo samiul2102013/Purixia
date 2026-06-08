@@ -18,6 +18,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const router = useRouter();
   const { isLoggedIn } = useAuth();
   const addItem = useCartStore((s) => s.addItem);
+  const addItemSilent = useCartStore((s) => s.addItemSilent);
   const [quantity, setQuantity] = React.useState(1);
   const [adding, setAdding] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState(product.image);
@@ -44,13 +45,18 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
   const handleBuyNow = async () => {
     if (!isLoggedIn) {
-      await handleAddToCart();
-      router.push(`/register?redirect=/checkout`);
+      try {
+        await addItemSilent(product.id, quantity);
+      } catch {
+        // Continue with redirect even if add fails
+      }
+      toast('Please sign up first');
+      router.push(`/register?redirect=/checkout&add_to_cart=${product.id}`);
       return;
     }
     setAdding(true);
     try {
-      await addItem(product.id, quantity);
+      await addItemSilent(product.id, quantity);
       router.push('/checkout');
     } catch {
       toast.error('Failed to add to cart');

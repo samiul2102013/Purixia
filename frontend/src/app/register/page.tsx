@@ -34,7 +34,7 @@ function RegisterForm() {
   const addToCartId = searchParams.get('add_to_cart');
   const registerMutation = useRegister();
   const { isLoggedIn } = useAuth();
-  const addItem = useCartStore((s) => s.addItem);
+  const addItemSilent = useCartStore((s) => s.addItemSilent);
 
   const {
     register,
@@ -49,7 +49,7 @@ function RegisterForm() {
       const handleAuthSuccess = async () => {
         if (addToCartId) {
           try {
-            await addItem(addToCartId, 1);
+            await addItemSilent(addToCartId, 1);
           } catch (e) {
             console.error('Failed to add item after registration', e);
           }
@@ -58,7 +58,7 @@ function RegisterForm() {
       };
       handleAuthSuccess();
     }
-  }, [isLoggedIn, router, redirectUrl, addToCartId, addItem]);
+  }, [isLoggedIn, router, redirectUrl, addToCartId, addItemSilent]);
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {

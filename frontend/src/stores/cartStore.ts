@@ -15,6 +15,7 @@ interface CartState {
   toggleDrawer: () => void;
   fetchCart: () => Promise<void>;
   addItem: (productId: number | string, quantity?: number) => Promise<void>;
+  addItemSilent: (productId: number | string, quantity?: number) => Promise<void>;
   updateItem: (productId: number | string, quantity: number) => Promise<void>;
   removeItem: (productId: number | string) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -60,7 +61,20 @@ export const useCartStore = create<CartState>((set, get) => ({
     try {
       await cartService.addItem(productId, quantity);
       await get().fetchCart();
-      get().openDrawer(); // Open drawer when item added as per nice premium feel
+      get().openDrawer();
+    } catch (error) {
+      console.error('Failed to add item to cart', error);
+      throw error;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  addItemSilent: async (productId, quantity = 1) => {
+    set({ loading: true });
+    try {
+      await cartService.addItem(productId, quantity);
+      await get().fetchCart();
     } catch (error) {
       console.error('Failed to add item to cart', error);
       throw error;
