@@ -54,7 +54,7 @@ class PlaceOrderView(APIView):
         data = serializer.validated_data
 
         body_items = data.get('items')
-        if body_items:
+        if body_items is not None and len(body_items) > 0:
             items_source = body_items
         elif cart and len(cart) > 0:
             items_source = cart

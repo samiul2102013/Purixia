@@ -26,7 +26,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
     setAdding(true);
     try {
-      await addItem(product.id, 1);
+      await addItem(product.id, 1, product);
       toast.success('Added to cart!');
     } catch {
       toast.error('Failed to add to cart');

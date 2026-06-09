@@ -112,6 +112,11 @@ export default function CheckoutPage() {
   const grandTotal = subtotal + shippingCost;
 
   const onSubmit = async (values: CheckoutFormValues) => {
+    if (items.length === 0) {
+      toast.error('Your cart is empty. Please add items before checkout.');
+      return;
+    }
+
     const payload = {
       shipping_info: {
         name: values.name,

@@ -34,7 +34,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const handleAddToCart = async () => {
     setAdding(true);
     try {
-      await addItem(product.id, quantity);
+      await addItem(product.id, quantity, product);
       toast.success('Added to cart!');
     } catch {
       toast.error('Failed to add to cart');
@@ -46,7 +46,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const handleBuyNow = async () => {
     if (!isLoggedIn) {
       try {
-        await addItem(product.id, quantity);
+        await addItem(product.id, quantity, product);
         closeDrawer();
       } catch (e) {
         console.error('Add to cart before redirect failed', e);
@@ -57,7 +57,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
     }
     setAdding(true);
     try {
-      await addItem(product.id, quantity);
+      await addItem(product.id, quantity, product);
       closeDrawer();
       router.push('/checkout');
     } catch {
