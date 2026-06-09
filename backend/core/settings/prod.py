@@ -46,7 +46,7 @@ X_FRAME_OPTIONS                = 'DENY'
 # ── Static files (WhiteNoise) ─────────────────────────────────────────────────
 # WhiteNoise configuration for serving static files in production
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 LOGGING = {
