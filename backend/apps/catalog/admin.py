@@ -44,7 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('price', 'quantity', 'in_stock')
         }),
         ('Media', {
-            'fields': ('image', 'images')
+            'fields': ('image',)
         }),
         ('Ratings', {
             'fields': ('rating',),
